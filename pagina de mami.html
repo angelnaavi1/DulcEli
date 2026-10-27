@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> Tortas Artesanales</title>
+<style>
+  :root {
+    --rosa: #f8d7e0;
+    --rosa-fuerte: #e8a0b4;
+    --menta: #d4f1e8;
+    --lila: #e3d7f5;
+    --crema: #fff8f0;
+    --melocoton: #ffe3cc;
+    --texto: #6b5563;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background: linear-gradient(135deg, var(--crema), var(--rosa), var(--lila));
+    background-size: 400% 400%;
+    animation: fondo 18s ease infinite;
+    color: var(--texto);
+    overflow-x: hidden;
+  }
+  @keyframes fondo {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Decoración flotante */
+  .burbuja {
+    position: fixed;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.45);
+    z-index: 0;
+    animation: flotar 12s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes flotar {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-40px) translateX(20px); }
+  }
+
+  header {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 80px 20px 60px;
+  }
+  .logo {
+    font-size: 64px;
+    display: inline-block;
+    animation: rebote 2.5s ease-in-out infinite;
+  }
+  @keyframes rebote {
+    0%, 100% { transform: translateY(0) rotate(-4deg); }
+    50% { transform: translateY(-14px) rotate(4deg); }
+  }
+  h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2.2rem, 6vw, 3.8rem);
+    color: #c0708c;
+    margin-top: 10px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: aparecer 1.2s ease 0.3s forwards;
+  }
+  .subtitulo {
+    margin-top: 14px;
+    font-size: 1.15rem;
+    opacity: 0;
+    animation: aparecer 1.2s ease 0.8s forwards;
+  }
+  .boton {
+    display: inline-block;
+    margin-top: 28px;
+    padding: 14px 34px;
+    border-radius: 40px;
+    background: var(--rosa-fuerte);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(232,160,180,0.45);
+    transition: transform .3s, box-shadow .3s;
+    opacity: 0;
+    animation: aparecer 1s ease 1.3s forwards;
+  }
+  .boton:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 12px 26px rgba(232,160,180,0.6);
+  }
+  @keyframes aparecer {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  section {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 50px 20px;
+  }
+  h2 {
+    text-align: center;
+    font-family: Georgia, serif;
+    font-size: 2rem;
+    color: #b06a84;
+    margin-bottom: 36px;
+  }
+
+  /* Tarjetas de sabores */
+  .sabores {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 26px;
+  }
+  .tarjeta {
+    background: rgba(255,255,255,0.7);
+    border-radius: 24px;
+    padding: 22px;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: transform .4s ease, box-shadow .4s ease;
+  }
+  .tarjeta.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity .8s ease, transform .8s ease, box-shadow .4s ease;
+  }
+  .tarjeta:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 30px rgba(0,0,0,0.1);
+  }
+
+  /* Espacio para fotos */
+  .foto {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 18px;
+    background: repeating-linear-gradient(45deg, var(--melocoton), var(--melocoton) 12px, #fff3ea 12px, #fff3ea 24px);
+    border: 2px dashed var(--rosa-fuerte);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #b0808f;
+    font-weight: 600;
+    font-size: .95rem;
+  }
+  .foto img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .tarjeta h3 {
+    margin-top: 16px;
+    color: #b06a84;
+    font-family: Georgia, serif;
+  }
+  .tarjeta p {
+    margin-top: 6px;
+    font-size: .95rem;
+  }
+
+  /* Galería */
+  .galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .galeria .foto {
+    aspect-ratio: 1 / 1;
+    background: repeating-linear-gradient(-45deg, var(--menta), var(--menta) 12px, #eefaf5 12px, #eefaf5 24px);
+    border-color: #8fd3bd;
+    color: #5a9c86;
+    transition: transform .4s ease;
+  }
+  .galeria .foto:hover { transform: scale(1.03) rotate(-1deg); }
+
+  /* Contacto */
+  .contacto {
+    text-align: center;
+    background: rgba(255,255,255,0.6);
+    border-radius: 30px;
+    padding: 40px 20px;
+    margin: 20px auto 60px;
+    max-width: 700px;
+  }
+  .contacto p { margin: 8px 0; font-size: 1.05rem; }
+
+  footer {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 24px;
+    font-size: .9rem;
+    opacity: .8;
+  }
+
+  /* Revelado al hacer scroll */
+  .revelar {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .9s ease, transform .9s ease;
+  }
+  .revelar.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- Decoración de fondo -->
+<div class="burbuja" style="width:180px;height:180px;top:8%;left:4%;"></div>
+<div class="burbuja" style="width:110px;height:110px;top:45%;right:6%;animation-delay:-4s;"></div>
+<div class="burbuja" style="width:240px;height:240px;bottom:5%;left:20%;animation-delay:-8s;"></div>
+
+<header>
+  <div class="logo">🎂</div>
+  <h1>Tortas Artesanales</h1>
+  <p class="subtitulo">Hechas con amor, una a la vez, para tus momentos especiales</p>
+  <a href="#sabores" class="boton">Ver tortas</a>
+</header>
+
+<section id="sabores">
+  <h2 class="revelar">Nuestros sabores</h2>
+  <div class="sabores">
+    <!-- Tarjeta 1 -->
+    <div class="tarjeta">
+      <div class="foto">
+        <img src="aqui los jpg" alt="Torta de vainilla" onerror="this.remove()">
+        <span>aqui los jpg</span>
+      </div>
+      <h3>Torta de Vainilla</h3>
+      <p>Esponjosa, con crema suave y un toque de flores.</p>
+    </div>
+    <!-- Tarjeta 2 -->
+    <div class="tarjeta">
+      <div class="foto">
+        <img src="aqui los jpg" alt="Torta de chocolate" onerror="this.remove()">
+        <span>aqui los jpg</span>
+      </div>
+      <h3>Torta de Chocolate</h3>
+      <p>Intensa, húmeda y cubierta de ganache.</p>
+    </div>
+    <!-- Tarjeta 3 -->
+    <div class="tarjeta">
+      <div class="foto">
+        <img src="aqui los jpg" alt="Torta de fresas" onerror="this.remove()">
+        <span>aqui los jpg</span>
+      </div>
+      <h3>Torta de Fresas</h3>
+      <p>Fresca y ligera, con fresas naturales.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="revelar">Galería</h2>
+  <div class="galeria">
+    <div class="foto revelar">
+      <img src="aqui los jpg" alt="Foto de torta 1" onerror="this.remove()">
+      <span>aqui los jpg</span>
+    </div>
+    <div class="foto revelar">
+      <img src="aqui los jpg" alt="Foto de torta 2" onerror="this.remove()">
+      <span>aqui los jpg</span>
+    </div>
+    <div class="foto revelar">
+      <img src="aqui los jpg" alt="Foto de torta 3" onerror="this.remove()">
+      <span>aqui los jpg</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="contacto revelar">
+    <h2>Haz tu pedido</h2>
+    <p>📱 Tel: 11-2322-2720</p>
+    <p>📍  Buenos Aires, San Fernando</p>
+    <p>💌 angel.naavi@gmail.com</p>
+  </div>
+</section>
+
+<footer>© Tortas Artesanales · Hecho con cariño</footer>
+
+<script>
+  // Revelar elementos con animación al entrar en pantalla
+  const observador = new IntersectionObserver((entradas) => {
+    entradas.forEach((entrada, i) => {
+      if (entrada.isIntersecting) {
+        setTimeout(() => entrada.target.classList.add('visible'), i * 150);
+        observador.unobserve(entrada.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.tarjeta, .revelar').forEach(el => observador.observe(el));
+
+  // Desplazamiento suave para el botón
+  document.querySelector('.boton').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('sabores').scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>
